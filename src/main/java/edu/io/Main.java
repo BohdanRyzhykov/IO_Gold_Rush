@@ -6,28 +6,17 @@ import edu.io.token.Token;
 public class Main {
     public static void main(String[] args) {
 
+        Game game = new Game();
 
-        Board board = new Board();
+        Player bohdan = new Player();
+        game.join(bohdan);
 
-
-        PlayerToken player = new PlayerToken(board);
-
-        System.out.println("Start");
-        board.display();
-
-        System.out.println(" ");
-
-        player.move(PlayerToken.Move.DOWN);
-        board.display();
-
-        System.out.println(" ");
-
-        player.move(PlayerToken.Move.RIGHT);
-        board.display();
+        game.start();
 
 
-        System.out.println("\nCoords: ");
-        Board.Coords p = player.pos();
-        System.out.println("col = " + p.col() + ", row = " + p.row());
+
+
+
+
     }
 }

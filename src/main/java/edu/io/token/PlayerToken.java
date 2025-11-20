@@ -1,5 +1,6 @@
 package edu.io.token;
 import edu.io.Board;
+import edu.io.Player;
 
 public class PlayerToken extends Token {
 
@@ -12,7 +13,7 @@ public class PlayerToken extends Token {
     private int row;
 
 
-    public PlayerToken(Board board) {
+    public PlayerToken(Player player,Board board) {
         super(Label.PLAYER_TOKEN_LABEL);
         this.board = board;
         this.col = board.size() / 2;
