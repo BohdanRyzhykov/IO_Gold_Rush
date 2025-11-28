@@ -63,6 +63,18 @@ public class Board {
             Coords c = (Coords) o;
             return col == c.col && row == c.row;
         }
-
     }
+    public Coords getAvailableSquare() {
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                if (board[row][col] instanceof EmptyToken) {
+                    return new Coords(col, row);
+                }
+            }
+        }
+        throw new IllegalStateException("Board is full");
+    }
+
+
+
 }
