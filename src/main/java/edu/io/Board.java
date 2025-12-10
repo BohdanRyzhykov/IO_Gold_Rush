@@ -7,11 +7,17 @@ public class Board {
 
     private final Token[][] board;
     private final int size;
+    private PlacementStrategy placementStrategy;
 
     public Board() {
         this.size = 5;
-        board = new Token[size][size];
+        this.board = new Token[size][size];
+        this.placementStrategy = new SequentialPlacementStrategy();
         clean();
+    }
+
+    public void setPlacementStrategy(PlacementStrategy strategy) {
+        this.placementStrategy = strategy;
     }
 
     public int size() {
@@ -65,16 +71,8 @@ public class Board {
         }
     }
     public Coords getAvailableSquare() {
-        for (int row = 0; row < size; row++) {
-            for (int col = 0; col < size; col++) {
-                if (board[row][col] instanceof EmptyToken) {
-                    return new Coords(col, row);
-                }
-            }
-        }
-        throw new IllegalStateException("Board is full");
+        return placementStrategy.findAvailableSquare(this);
     }
-
 
 
 }
