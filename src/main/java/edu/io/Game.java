@@ -1,5 +1,6 @@
 package edu.io;
 
+import edu.io.player.Player;
 import edu.io.token.PlayerToken;
 
 public class Game {
@@ -7,18 +8,14 @@ public class Game {
     private Board board;
     private Player player;
 
-    public void join(Player player){
+    public void join(Player player) {
         this.player = player;
         this.board = new Board();
-        PlayerToken playerToken = new PlayerToken(this.player, this.board);
-        this.player.assignToken(playerToken);
+        PlayerToken token = new PlayerToken(player, board);
+        player.assignToken(token);
     }
 
-    public void start(){
-        this.board = new Board();
-        PlayerToken playerToken = new PlayerToken(this.player, this.board);
-        this.player.assignToken(playerToken);
-        board.display();
+    public void start() {
+
     }
 }
-

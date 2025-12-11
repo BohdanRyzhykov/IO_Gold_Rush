@@ -1,6 +1,7 @@
 package edu.io.token;
+
 import edu.io.Board;
-import edu.io.Player;
+import edu.io.player.Player;
 
 public class PlayerToken extends Token {
 
@@ -12,16 +13,13 @@ public class PlayerToken extends Token {
     private int col;
     private int row;
 
-
     public PlayerToken(Player player, Board board) {
         super(Label.PLAYER_TOKEN_LABEL);
         this.board = board;
         this.col = board.size() / 2;
         this.row = board.size() / 2;
         board.placeToken(col, row, this);
-        if (player != null) {
-            player.assignToken(this);
-        }
+
     }
 
     public Board.Coords pos() {
@@ -35,18 +33,18 @@ public class PlayerToken extends Token {
         int newRow = row;
 
         switch (m) {
-            case LEFT -> newCol--;
+            case LEFT  -> newCol--;
             case RIGHT -> newCol++;
-            case UP -> newRow--;
-            case DOWN -> newRow++;
+            case UP    -> newRow--;
+            case DOWN  -> newRow++;
         }
 
-        if (newCol < 0 || newCol >= board.size() || newRow < 0 || newRow >= board.size()) {
-            throw new IllegalArgumentException("move out of board limit");
+        if (newCol < 0 || newCol >= board.size()
+                || newRow < 0 || newRow >= board.size()) {
+            throw new IllegalArgumentException("move out of board bounds");
         }
 
         board.placeToken(col, row, new EmptyToken());
-
         col = newCol;
         row = newRow;
         board.placeToken(col, row, this);
