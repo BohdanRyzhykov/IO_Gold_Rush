@@ -55,13 +55,12 @@ public class PickaxeToken extends Token {
         }
 
         if (token instanceof GoldToken) {
-            use(); // уменьшили прочность
+            use();
             return new UseResult(isBroken() ? State.BROKEN : State.WORKING);
         }
 
         return new UseResult(State.IDLE);
     }
-
 
     public enum State {
         WORKING, BROKEN, IDLE

@@ -1,7 +1,8 @@
 package edu.io.token;
 
-import edu.io.Board;
 import edu.io.player.Player;
+import edu.io.Board;
+
 
 public class PlayerToken extends Token {
 

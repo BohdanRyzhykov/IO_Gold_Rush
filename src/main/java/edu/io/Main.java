@@ -16,7 +16,6 @@ public class Main {
         Board board = new Board();
         Player player = new Player();
         PlayerToken token = new PlayerToken(player, board);
-
         player.assignToken(token);
 
 
@@ -25,7 +24,6 @@ public class Main {
         placeRandomTool(board, new AnvilToken());
 
         Scanner scanner = new Scanner(System.in);
-
         printHelp();
 
         while (true) {
@@ -33,7 +31,7 @@ public class Main {
             System.out.println("=== BOARD ===");
             board.display();
             System.out.printf("Gold: %.2f%n", player.gold.amount());
-            System.out.println("Enter command (LEFT/RIGHT/UP/DOWN/PICK/SHOW/SPA WN n/HELP/EXIT):");
+            System.out.println("Enter command (LEFT/RIGHT/UP/DOWN/PICK/SHOW/SPAWN n/HELP/EXIT):");
             System.out.print("> ");
 
             String line = scanner.nextLine().trim();
@@ -49,7 +47,6 @@ public class Main {
                 printHelp();
                 continue;
             } else if ("SHOW".equals(cmd)) {
-                // просто покажем доску и золото (board.display уже выводится)
                 System.out.printf("Gold: %.2f%n", player.gold.amount());
                 continue;
             } else if ("SPAWN".equals(cmd)) {
@@ -61,7 +58,6 @@ public class Main {
                 System.out.printf("Spawned %d gold tokens.%n", n);
                 continue;
             } else if ("PICK".equals(cmd)) {
-                // взаимодействие с токеном на текущей позиции
                 Board.Coords pos = token.pos();
                 Token t = safePeek(board, pos.col(), pos.row());
                 if (t instanceof EmptyToken) {
@@ -83,7 +79,6 @@ public class Main {
                 continue;
             }
 
-
             int col = token.pos().col();
             int row = token.pos().row();
             int nextCol = col;
@@ -95,7 +90,6 @@ public class Main {
                 case DOWN -> nextRow++;
                 default -> {}
             }
-
 
             try {
 
@@ -127,6 +121,7 @@ public class Main {
         System.out.println("  EXIT                      - quit");
     }
 
+
     private static Token safePeek(Board board, int col, int row) {
         if (col < 0 || row < 0 || col >= board.size() || row >= board.size()) {
             return new EmptyToken();
@@ -134,6 +129,19 @@ public class Main {
         return board.peekToken(col, row);
     }
 
+
+    private static Board.Coords getRandomFreeCell(Board board) {
+        List<Board.Coords> free = new ArrayList<>();
+        for (int r = 0; r < board.size(); r++) {
+            for (int c = 0; c < board.size(); c++) {
+                if (board.peekToken(c, r) instanceof EmptyToken) {
+                    free.add(new Board.Coords(c, r));
+                }
+            }
+        }
+        if (free.isEmpty()) throw new IllegalStateException("Board is full");
+        return free.get(RNG.nextInt(free.size()));
+    }
 
     private static void placeRandomGold(Board board, int n) {
         for (int i = 0; i < n; i++) {
@@ -150,20 +158,6 @@ public class Main {
         try {
             Board.Coords c = getRandomFreeCell(board);
             board.placeToken(c.col(), c.row(), tool);
-        } catch (IllegalStateException ignored) {
-        }
-    }
-
-    private static Board.Coords getRandomFreeCell(Board board) {
-        List<Board.Coords> free = new ArrayList<>();
-        for (int r = 0; r < board.size(); r++) {
-            for (int c = 0; c < board.size(); c++) {
-                if (board.peekToken(c, r) instanceof EmptyToken) {
-                    free.add(new Board.Coords(c, r));
-                }
-            }
-        }
-        if (free.isEmpty()) throw new IllegalStateException("Board is full");
-        return free.get(RNG.nextInt(free.size()));
+        } catch (IllegalStateException ignored) {}
     }
 }
