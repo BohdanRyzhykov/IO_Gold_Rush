@@ -19,8 +19,11 @@ public class Board {
     }
 
     public void placeToken(int col, int row, Token token) {
+        if (token == null)
+            throw new NullPointerException();
         board[row][col] = token;
     }
+
 
     public Token peekToken(int col, int row) {
         return board[row][col];

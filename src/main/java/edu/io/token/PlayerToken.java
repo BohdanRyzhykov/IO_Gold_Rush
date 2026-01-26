@@ -16,12 +16,19 @@ public class PlayerToken extends Token {
 
     public PlayerToken(Player player, Board board) {
         super(Label.PLAYER_TOKEN_LABEL);
+
+        if (player == null)
+            throw new NullPointerException("player is null");
+        if (board == null)
+            throw new NullPointerException("board is null");
+
         this.board = board;
         this.col = board.size() / 2;
         this.row = board.size() / 2;
-        board.placeToken(col, row, this);
 
+        board.placeToken(col, row, this);
     }
+
 
     public Board.Coords pos() {
         return new Board.Coords(col, row);
