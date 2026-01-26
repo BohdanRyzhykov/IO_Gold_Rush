@@ -18,4 +18,10 @@ public class Game {
     public void start() {
 
     }
+
+    public void displayBoard() {
+        if (board != null)
+            board.display();
+    }
+
 }
