@@ -1,4 +1,4 @@
-# ⛏️ Gold Digger
+# ⛏️ Gold Rush
 
 A simple **Java game** created as a university project.
 
